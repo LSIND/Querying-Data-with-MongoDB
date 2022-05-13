@@ -1,0 +1,51 @@
+------------- mongosh connection -------------
+
+mongosh "mongodb://127.0.0.1:27017"
+
+show databases
+
+show dbs
+
+db.version()
+
+exit
+
+
+---------------- mongoimport -----------------
+
+mongoimport --uri "mongodb://localhost:27017/customerdata" --collection=customers --drop <YOUR_PATH>\data\customers.json
+
+mongoimport --uri "mongodb://localhost:27017/londonfixprices" --collection=metalprices --type csv --fields "Date.date_ms("yyyy-MM-dd"), GoldAMFix.decimal(),GoldPMFix.decimal(),SilverFix.decimal(),PlatinumAMFix.decimal(),PlatinumPMFix.decimal(),PalladiumAMFix.decimal(),PalladiumFMFix.decimal()" --file <YOUR_PATH>\data\londonfixprices.csv --columnsHaveTypes
+
+mongoimport --uri "mongodb://localhost:27017/weatherdata" --collection=weather --drop <YOUR_PATH>\data\weather.json
+
+use weatherdata
+db.stats()
+
+show collections
+
+db.collection.help()
+
+db.weather.countDocuments()
+
+
+db.weather.findOne()
+
+db.weather.find()
+it
+
+db
+
+
+-------------- Compass import ----------------
+
+mongoimport --uri "mongodb://localhost:27017/moviesdata" --collection=movies --drop <YOUR_PATH>\data\movies.json
+
+
+---------------- mongoexport -----------------
+
+mongoexport --uri "mongodb://localhost:27017/weatherdata" --collection=weather --out=<YOUR_PATH>\\weather.json
+
+mongoexport --uri "mongodb://localhost:27017/londonfixprices" --collection=metalprices --out=<YOUR_PATH>\\metalprices.json
+
+

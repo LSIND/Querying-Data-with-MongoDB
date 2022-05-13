@@ -1,0 +1,86 @@
+// Модуль 4. Агрегирование данных
+// Операторы $match и вычисляемый $project
+
+// Коллекция sample_training.trips
+use('sample_training')
+
+// 1. Найти длительность каждой поездки на велосипеде с номером 22794 в часах. 
+// Округлить до двух знаков после запятой (2).
+var pipeline = [ { $match: {"bikeid": 22794 }},
+{ $project: { _id: 0, hrs: {$divide :["$tripduration" , 60] }}}
+]
+
+// 2.	Найти в каком часу(ах) брали в аренду велосипед с номером 23993 (функция $hour) (6).
+var pipeline = [
+  { $match: {"bikeid" : 23993}},
+  { $project : { _id: 0, hour: { $hour :"$start time"}}}
+]
+
+// 3. Найти три самых последних велосипеда, возвращенных на станцию номер 284.
+var pipeline = [
+  { $match: {"end station id" : 284 }},
+  { $project : { _id: 0, "bikeid": 1, "stop time" : 1 } },
+  { $sort: { "stop time" : -1 } },
+  { $limit : 3 }
+]
+
+// 4. Найти все поездки от станции номер 2006 (Central Park S & 6 Ave). 
+// Отдельным полем вывести дополнительную информацию ($switch - case) Long, Medium, Short. 
+// Если поездка заняла более, чем 2000 минут – Long, от 1000 до 2000 – Medium и менее 1000 минут – Short. 
+// Также должен быть флаг по умолчанию. Отсортировать по времени начала поездки (дату не учитывать) (114).
+var pipeline = [
+  { $match: {  "start station id" : 2006 }},
+  { $project : { _id: 0, bikeid: 1, "timeStart": {$dateToString: {format: "%H:%M:%S", date: "$start time" } }, 
+              "tripduration" : 1, "flag": {
+                $switch : { 
+                      branches : [
+                            {
+                              case :  { $gt : ["$tripduration", 2000 ] },
+                              then : "Long"
+                            },
+                            {
+                              case: { $lt: ["$tripduration", 1000] },
+                              then: "Short"
+                            },
+                            {
+                              case: { $and: [{ $gte : ["tripduration", 1000] }, { $lte: ["$tripduration", 2000] }] },
+                              then: "Medium"
+                            }
+                                ],
+                            default: "Not specified"
+                          }
+                          } } },
+  { $sort: { "timeStart" : 1 } }
+]
+
+
+// Запросы для проверки
+//db.trips.aggregate(pipeline)
+db.trips.aggregate(pipeline).itcount()
+
+
+// ------------------------- //
+// Коллекция customerdata.customers
+use('customerdata')
+
+// 1.	Найти пять аккаунтов с самым большим количеством денег на счету. 
+// Номер аккаунта вывести без дефисов, баланс вывести в виде строки.
+var pipeline = [
+  { $addFields : {bal : {$toString : "$balance" } } },
+  { $project : { _id: 0, bal: 1, "acNumber": { $replaceAll : { input: "$accountNumber", find: "-", replacement: ""} }, 
+           "accountType": 1, "balance" : 1 } },
+  { $sort: { "balance" : -1 } },
+  { $limit : 5 },
+  { $project: { "acNumber": 1, "accountType":1, bal:1 }}
+]
+
+// 2. Найти всех женщин с фамилией, начинающейся на "Mc". Упорядочить по возрасту по убыванию (19)
+var pipeline = [
+  { $match: { $and: [ {"name.last" : /^Mc/}, { gender: "female"}] } },
+  { $project : { _id: 0, name:1, accountNumber: 1, gender: 1, age: 1} },
+  { $sort: { "age" : -1 } }
+]
+
+// Запросы для проверки
+db.customers.aggregate(pipeline)
+//db.customers.aggregate(pipeline).itcount()
