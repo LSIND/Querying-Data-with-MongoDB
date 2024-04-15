@@ -1,10 +1,13 @@
 // Модуль 2. Язык запросов MQL
-// КУРСОРЫ И ПРОЕКЦИИ
+// Ex 3 - КУРСОРЫ И ПРОЕКЦИИ
+//
+// Сравните результирующие наборы с solution/3-task-result.txt
+//
 
 // Коллекция sample_training.zips
 use('sample_training')
 
-// 1. Найти все документы, описывающие штат NY. Подсчитать их количество
+// 1. Найти все документы, описывающие штат NY. Подсчитать их количество (1596)
 var q = { state: "NY"}
 db.zips.find(q).count()
 
@@ -12,13 +15,14 @@ db.zips.find(q).count()
 var p = { _id: 0, state: 1, city: 1}
 db.zips.find({}, p)
 
-// 3. Вывести список штатов (уникальные значения)
+// 3. Вывести список штатов (уникальные значения) - distinct
 var p = { _id: 0, state: 1, city: 1}
 db.zips.distinct("state")
 
 // 4. Найти все документы, где штат – NY, а город – ALBANY.
-//  Подсчитать их количество.
+//  Подсчитать их количество (7).
 var q = { state: "NY", city: "ALBANY"}
+db.zips.find(q)
 db.zips.find(q).count()
 
 
@@ -44,12 +48,11 @@ db.companies.find({}, p).sort(s).limit(lim)
 // 4. Найти 3 самых старых компании по году основания (в founded_year могут содержаться значения null). 
 // Вывести только имя компании, год основания и код категории.
 
-use('sample_training')
 var q = {founded_year: {$ne: null } }
 var p = { _id:0, name: 1, founded_year: 1, category_code:1}
 var s = {founded_year: 1}
 var lim = 3
-db.companies.find(q).sort(s).limit(lim)
+db.companies.find(q, p).sort(s).limit(lim)
 
 // ------------------------- //
 // Коллекция sample_training.trips
@@ -61,7 +64,7 @@ var s = {tripduration: 1}
 var lim = 3
 db.trips.find({}, p).sort(s).limit(lim)
 
-// 2. Найти самого молодого пользователя и выведите только год его рождения и тип пользователя (1999, Subscriber).
+// 2. Найти самого молодого пользователя и вывести только год его рождения и тип пользователя (usertype).
 var q = {"birth year": {$ne: ""}}
 var p = { _id:0, "birth year": 1, usertype: 1}
 var s = {"birth year": -1}
@@ -83,15 +86,14 @@ db.trips.find({}, p).sort(s)
 
 
 // 5. Найти две самые последние поездки в системе (stop time).
-use('sample_training')
 var p = { _id:0, bikeid: 1, "stop time": 1}
 var s = {"stop time": 1}
-var lim = 5
+var lim = 2
 db.trips.find({}, p).sort(s).limit(lim)
 
 // 6. Выводятся 50 самых коротких поездок по времени. 
 // Учитывая, что формируются 10 страниц по 5 документов на каждой, вывести только третью страницу.
-use('sample_training')
+
 var p = { _id:0, tripduration: 1, "end station name": 1}
 var s = {tripduration: 1}
 var lim = 5

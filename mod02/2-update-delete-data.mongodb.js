@@ -1,14 +1,16 @@
 // Модуль 2. Язык запросов MQL
-// ОБНОВЛЕНИЕ ДАННЫХ
+// EX 2 - ОБНОВЛЕНИЕ ДАННЫХ
+//
+// Сравните результирующие наборы с solution/2-task-result.txt
+//
 
+use('sample_training')
 // Коллекция sample_training.zips - Compass
 // 1. Изменить поле zip на 12345
-use('sample_training')
 db.zips.updateOne({zip: "35018"}, { $set: { zip: "12345" } })
 db.zips.find({zip: "12345"})
 
 // Добавить новое поле типа Array, состоящее из нескольких элементов
-use('sample_training')
 db.zips.updateOne(
    { zip: "12345" },
    { $push: { Locations: { $each: [ "X1", "X2" ] } } }
@@ -17,7 +19,6 @@ db.zips.updateOne(
 db.zips.find({zip: "12345"})
 
 // 2.	Добавьте поле population со значением 22000 у документа с zip-кодом 35054
-
 use('sample_training')
 db.zips.update({ zip: "35054" },
    { $set: { Population: 40000 }
@@ -35,11 +36,11 @@ db.zips.updateMany(
 )
 db.zips.find({zip: "12345"})
 
+
+// ------------------------- //
 // Коллекция sample_training.pets
-
-// 1. Выполнить запрос. Подсчитать количество документов
-
 use('sample_training')
+// 1. Выполнить запрос. Подсчитать количество документов
 
 db.pets.find({pet: "fish"})
 db.pets.find({pet: "fish"}).count()
@@ -74,15 +75,13 @@ db.pets.updateMany({ pet: "pig" },
 
 db.pets.find({})
 
-
+// ------------------------- //
 // Коллекция sample_training.grades
 
 // 1. Найти студента с номером student_id = 250 в классе class_id = 339.
-use('sample_training')
 db.grades.find({ student_id: 250, class_id: 339 })
 
-
-// 2. Обновить документ, добавив баллы в массив scores (extra credit: 100). Оператор $push.
+// 2. Обновить документ из п.1, добавив баллы в массив scores (extra credit: 100). Оператор $push.
 use('sample_training')
 db.grades.updateOne({ student_id: 250, class_id: 339 },
                     { $push: { scores: { type: "extra credit",
@@ -99,18 +98,14 @@ use('sample_training')
 db.pets.deleteMany({ pet: "cat"})
 
 // 2. Удалите все созданные документы, где pet = pig (deleteOne)
-use('sample_training')
 db.pets.deleteOne({ pet: "pig" })
 
 // 3. Что еще осталось в коллекции?
-use('sample_training')
 db.pets.find()
 
 // 4. Удалить коллекцию pets командой drop()
-use('sample_training')
 db.pets.drop()
 
 
 // 5. Найти и удалить документ, добавленный в п.1 модуля2
-use('sample_training')
 db.zips.deleteOne({ zip: "12345" })

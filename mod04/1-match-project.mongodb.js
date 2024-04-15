@@ -1,13 +1,21 @@
 // Модуль 4. Агрегирование данных
-// Операторы $match и вычисляемый $project
+// Ex 1 - Операторы $match и вычисляемый $project
+//
+// Сравните результирующие наборы с solution/1-task-result.txt
+//
 
 // Коллекция sample_training.trips
-use('sample_training')
+use('sample_training');
 
-// 1. Найти длительность каждой поездки на велосипеде с номером 22794 в часах. 
-// Округлить до двух знаков после запятой (2).
+// 1. Найти длительность каждой поездки на велосипеде с номером 22794 в часах (2). 
+
 var pipeline = [ { $match: {"bikeid": 22794 }},
 { $project: { _id: 0, hrs: {$divide :["$tripduration" , 60] }}}
+]
+
+// Округлить до двух знаков после запятой.
+var pipeline = [ { $match: {"bikeid": 22794 }},
+{ $project: { _id: 0, hrs: { $round: [ {$divide :["$tripduration" , 60] }, 2] }} }
 ]
 
 // 2.	Найти в каком часу(ах) брали в аренду велосипед с номером 23993 (функция $hour) (6).
@@ -16,7 +24,7 @@ var pipeline = [
   { $project : { _id: 0, hour: { $hour :"$start time"}}}
 ]
 
-// 3. Найти три самых последних велосипеда, возвращенных на станцию номер 284.
+// 3. Найти три велосипеда, возвращенных на станцию номер 284 последними.
 var pipeline = [
   { $match: {"end station id" : 284 }},
   { $project : { _id: 0, "bikeid": 1, "stop time" : 1 } },
@@ -53,9 +61,8 @@ var pipeline = [
   { $sort: { "timeStart" : 1 } }
 ]
 
-
 // Запросы для проверки
-//db.trips.aggregate(pipeline)
+db.trips.aggregate(pipeline)
 db.trips.aggregate(pipeline).itcount()
 
 
@@ -74,7 +81,7 @@ var pipeline = [
   { $project: { "acNumber": 1, "accountType":1, bal:1 }}
 ]
 
-// 2. Найти всех женщин с фамилией, начинающейся на "Mc". Упорядочить по возрасту по убыванию (19)
+// 2. Найти всех женщин с фамилией, начинающейся на "Mc". Упорядочить по возрасту по убыванию (19).
 var pipeline = [
   { $match: { $and: [ {"name.last" : /^Mc/}, { gender: "female"}] } },
   { $project : { _id: 0, name:1, accountNumber: 1, gender: 1, age: 1} },
@@ -83,4 +90,4 @@ var pipeline = [
 
 // Запросы для проверки
 db.customers.aggregate(pipeline)
-//db.customers.aggregate(pipeline).itcount()
+db.customers.aggregate(pipeline).itcount()

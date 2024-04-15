@@ -1,8 +1,11 @@
 // Модуль 4. Агрегирование данных
-// Оператор $group
+// Ex 2 - Оператор $group
+//
+// Сравните результирующие наборы с solution/2-task-result.txt
+//
 
 // Коллекция customerdata.customers
-use('customerdata')
+use('customerdata');
 
 // 1.	Найти средний возраст всех заказчиков ($age) (avgAge = 32.583).
 
@@ -16,16 +19,17 @@ var pipeline = [
 ]
 
 
-// 2. Найти количество сотрудников по каждому типу аккаунта ($accountType).
+// 2. Подсчитать количество сотрудников по каждому типу аккаунта ($accountType).
 var pipeline = [
   { 
     $group: {
         _id: "$accountType",
         countN: { $sum: 1  }
-}}]
+}}
+]
 
 // 3. Найти минимальный баланс на счету для каждого возраста.
-// Выведите только те значения, где баланс от 1100 до 1200. Отсортируйте по балансу по убыванию (6). 
+// Выведите только те значения, где баланс в промежутке от 1100 до 1200. Отсортируйте по балансу по убыванию (6). 
 var pipeline = [
   {
       $group: {
@@ -34,7 +38,7 @@ var pipeline = [
           }}, 
   { $match: {"avgBal": {$gte: 1100, $lte: 1200}}},
   { $sort: {"avgBal": -1}}
-  ]
+]
 
 // 4. Найти средний баланс на счетах сотрудников в зависимости от пола ($gender). 
 // Округлите данные до 3-х знаков после запятой.
@@ -42,7 +46,8 @@ var pipeline = [
     {   $group: {  _id: "$gender",
         avgBal: {    $avg: "$balance"  } }
     },
-{ $project: 
+{ 
+  $project: 
   { _id: 1, avgBalRound: { $round : ["$avgBal", 3] } }
 }
 ]
@@ -53,7 +58,7 @@ db.customers.aggregate(pipeline)
 
 // ------------------------- //
 // Коллекция sample_training.grades
-use('sample_training')
+use('sample_training');
 
 // 1. Найти общее количество студентов в классе с номером 108 (total = 236).
 var pipeline = [ 
@@ -90,7 +95,6 @@ var pipeline = [
   { $sort: {"value": -1}}
  ]
 
-
 // 4. Найти максимальное количество баллов по каждому классу. 
 // Вывести только те классы, где максимальное значение больше 99.999.
 var pipeline = [ 
@@ -105,7 +109,7 @@ var pipeline = [
  ]
 
  // 5. Найти среднее количество баллов по всем классам. 
-// Выведите только те классы, где средний балл меньше 48 (12).
+// Вывести только те классы, где средний балл меньше 48 (12).
 // Упорядочить по среднему баллу по возрастанию
 var pipeline = [   
   { $unwind: "$scores" },
@@ -119,20 +123,19 @@ var pipeline = [
  ]
 
 
-// Запрос для проверки
+// Запросы для проверки
 db.grades.aggregate(pipeline)
-//db.grades.aggregate(pipeline).itcount()
+db.grades.aggregate(pipeline).itcount()
 
 
 // ------------------------- //
 // Коллекция londonfixprices.metalprices
-use('londonfixprices')
+use('londonfixprices');
 
-// 1.	Рассчитать изменения в цене за 1 oz t серебра относительно первого дня месяца 
-// (первый день месяца выбрать самостоятельно)
+// 1.	Рассчитать изменения в цене за 1 oz t серебра относительно 1 января 2022 года 
 // Использовать оконную функцию $first 
 
-var firstDate = new ISODate("2022-02-01");
+var firstDate = new ISODate("2022-01-01");
 var pipeline = [
   {$match: {Date: {$gt: firstDate}}},
   {
@@ -143,12 +146,12 @@ var pipeline = [
       },
       "output": {
         fOM: {
-          $first: "$Silver Fix",
+          $first: "$SilverFix",
           window: {documents: ["unbounded", "current"]}
         },
         lead: {
           $shift: {
-            output: "$Silver Fix",
+            output: "$SilverFix",
             by: 1,
             default: 0
           }
@@ -156,17 +159,26 @@ var pipeline = [
       }
     }
   },
-  {$project: {"_id":0, YMD: { $dateToString: { format: "%d.%m.%Y", date: "$Date" } }, Diff: { $convert: { input:  { $subtract: [ "$Silver Fix", "$fOM" ] }, to: "string"}}, "Silver Fix": { $convert: { input: "$Silver Fix", to: "string" } }
+  {$project: {"_id":0, YMD: { $dateToString: { format: "%d.%m.%Y", date: "$Date" } }, Diff: { $convert: { input:  { $subtract: [ "$SilverFix", "$fOM" ] }, to: "string"}}, "SilverFix": { $convert: { input: "$SilverFix", to: "string" } }
   }},
 ]
 
-// 2. Найти дату с максимальной ценой на золото (AM) за 2020 год.
-var pipeline = [  
-  { $match: { Date: { $gte: new ISODate("2020-01-01"), $lt: new ISODate("2021-01-01") } } },
-  { $sort: {"Gold AM Fix": -1}},
-  { $limit: 1},
-  { $project: {_id: 0, Date:1, "Gold AM Fix": 1}}
+
+// 2. Найти 3 документа с самой низкой ценой золота (GoldAMFix) за 1999 год.
+// Выведите только дату и цену
+// Учитывайте, что таких дат может быть несколько (соответственно документов >=3).
+// Использовать оконную функцию $denseRank 
+
+var pipeline = [
+  { $match: { Date: { $gte: new ISODate("1999-01-01"), $lt: new ISODate("2000-01-01") } } },
+  {"$setWindowFields": 
+      {"output": {"dense-rank": {"$denseRank": {}}},
+       "sortBy": {"GoldAMFix": 1}}},
+    {"$match": {"$expr": {"$lte": ["$dense-rank", 3]}}},
+    {"$unset": ["dense-rank"]},
+    { $project: {_id: 0, Date:1, "GoldAMFix": 1} } 
 ]
 
-db.metalprices.aggregate(pipeline)
 
+// Запрос для проверки
+db.metalprices.aggregate(pipeline)

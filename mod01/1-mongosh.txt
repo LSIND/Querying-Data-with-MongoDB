@@ -15,7 +15,7 @@ exit
 
 mongoimport --uri "mongodb://localhost:27017/customerdata" --collection=customers --drop <YOUR_PATH>\data\customers.json
 
-mongoimport --uri "mongodb://localhost:27017/londonfixprices" --collection=metalprices --type csv --fields "Date.date_ms("yyyy-MM-dd"), GoldAMFix.decimal(),GoldPMFix.decimal(),SilverFix.decimal(),PlatinumAMFix.decimal(),PlatinumPMFix.decimal(),PalladiumAMFix.decimal(),PalladiumFMFix.decimal()" --file <YOUR_PATH>\data\londonfixprices.csv --columnsHaveTypes
+mongoimport --uri "mongodb://localhost:27017/londonfixprices" --collection=metalprices --type csv --fields "Date.date_ms("yyyy-MM-dd"),GoldAMFix.decimal(),GoldPMFix.decimal(),SilverFix.decimal(),PlatinumAMFix.decimal(),PlatinumPMFix.decimal(),PalladiumAMFix.decimal(),PalladiumFMFix.decimal()" --file <YOUR_PATH>\data\londonfixprices.csv --columnsHaveTypes
 
 mongoimport --uri "mongodb://localhost:27017/weatherdata" --collection=weather --drop <YOUR_PATH>\data\weather.json
 

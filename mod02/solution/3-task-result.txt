@@ -1,0 +1,227 @@
+// ------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------
+
+// Коллекция sample_training.zips
+
+// 2. // ------------------------------------------------------------------------------------
+
+[
+  { city: 'BAILEYTON', state: 'AL' },
+  { city: 'ALPINE', state: 'AL' },
+  { city: 'BLOUNTSVILLE', state: 'AL' },
+  { city: 'ACMAR', state: 'AL' },
+  { city: 'BREMEN', state: 'AL' },
+  { city: 'BRIERFIELD', state: 'AL' },
+  { city: 'ADGER', state: 'AL' },
+  { city: 'ADAMSVILLE', state: 'AL' },
+  { city: 'CALERA', state: 'AL' },
+  { city: 'CENTREVILLE', state: 'AL' },
+  { city: 'CHELSEA', state: 'AL' },
+  { city: 'HUEYTOWN', state: 'AL' },
+  { city: 'COOSA PINES', state: 'AL' },
+  { city: 'BRENT', state: 'AL' },
+  { city: 'CLANTON', state: 'AL' },
+  { city: 'CLEVELAND', state: 'AL' },
+  { city: 'CRANE HILL', state: 'AL' },
+  { city: 'CULLMAN', state: 'AL' },
+  { city: 'CROPWELL', state: 'AL' },
+  { city: 'ARAB', state: 'AL' }
+]
+
+// 3. // ------------------------------------------------------------------------------------
+[
+  'AK', 'AL', 'AR', 'AZ', 'CA', 'CO', 'CT',
+  'DC', 'DE', 'FL', 'GA', 'HI', 'IA', 'ID',
+  'IL', 'IN', 'KS', 'KY', 'LA', 'MA', 'MD',
+  'ME', 'MI', 'MN', 'MO', 'MS', 'MT', 'NC',
+  'ND', 'NE', 'NH', 'NJ', 'NM', 'NV', 'NY',
+  'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD',
+  'TN', 'TX', 'UT', 'VA', 'VT', 'WA', 'WI',
+  'WV', 'WY'
+]
+
+// 4. // ------------------------------------------------------------------------------------
+[
+  {
+    _id: ObjectId("5c8eccc1caa187d17ca731d0"),
+    city: 'ALBANY',
+    zip: '12204',
+    loc: { y: 42.684667, x: 73.735364 },
+    pop: 6927,
+    state: 'NY'
+  },
+  {
+    _id: ObjectId("5c8eccc1caa187d17ca731d4"),
+    city: 'ALBANY',
+    zip: '12206',
+    loc: { y: 42.668326, x: 73.774406 },
+    pop: 17230,
+    state: 'NY'
+  },
+  {
+    _id: ObjectId("5c8eccc1caa187d17ca731d5"),
+    city: 'ALBANY',
+    zip: '12207',
+    loc: { y: 42.658133, x: 73.752327 },
+    pop: 2709,
+    state: 'NY'
+  },
+  {
+    _id: ObjectId("5c8eccc1caa187d17ca731d6"),
+    city: 'ALBANY',
+    zip: '12208',
+    loc: { y: 42.655989, x: 73.796357 },
+    pop: 22041,
+    state: 'NY'
+  },
+  {
+    _id: ObjectId("5c8eccc1caa187d17ca731d7"),
+    city: 'ALBANY',
+    zip: '12209',
+    loc: { y: 42.641665, x: 73.785385 },
+    pop: 10008,
+    state: 'NY'
+  },
+  {
+    _id: ObjectId("5c8eccc1caa187d17ca731db"),
+    city: 'ALBANY',
+    zip: '12202',
+    loc: { y: 42.641314, x: 73.764071 },
+    pop: 11097,
+    state: 'NY'
+  },
+  {
+    _id: ObjectId("5c8eccc1caa187d17ca731de"),
+    city: 'ALBANY',
+    zip: '12210',
+    loc: { y: 42.65677, x: 73.76052 },
+    pop: 9374,
+    state: 'NY'
+  }
+]
+
+
+
+// ------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------
+
+// Коллекция sample_training.companies
+
+// 1. // ------------------------------------------------------------------------------------
+
+[
+  {
+    _id: ObjectId("52cdef7c4bab8bd675297d8a"),
+    name: 'Wetpaint',
+    phone_number: '206.859.6300'
+  },
+  {
+    _id: ObjectId("52cdef7c4bab8bd675297d8f"),
+    name: 'Omnidrive',
+    phone_number: '660-675-5052'
+  },
+  ....
+  ....
+]
+
+
+// 2. // ------------------------------------------------------------------------------------
+
+[
+  {
+    name: 'Wetpaint',
+    email_address: 'info@wetpaint.com',
+    phone_number: '206.859.6300'
+  },
+  {
+    name: 'Omnidrive',
+    email_address: 'info@omnidrive.com',
+    phone_number: '660-675-5052'
+  },
+
+
+// 3. // ------------------------------------------------------------------------------------
+
+[
+  { name: 'zyntroPICS', description: 'Interactive Transmedia Story Production' },
+  { name: 'zip2', description: '' },
+  { name: 'zip realty', description: null },
+  { name: 'zintin', description: '' },
+  { name: 'zimtkorn', description: '' },
+  { name: 'zembly', description: 'cloud social development' },
+  { name: 'zeaLOG', description: 'Peronal Metrics' },
+  { name: 'zappn', description: 'Event Management Platform' },
+  { name: 'zSlide', description: '' },
+  { name: 'youcalc', description: 'Analytics for SaaS systems' }
+]
+
+
+// 4. // ------------------------------------------------------------------------------------
+[
+  { name: 'Alstrasoft', category_code: 'software', founded_year: 1800 },
+  { name: 'US Army', category_code: 'other', founded_year: 1800 },
+  { name: 'DuPont', category_code: 'biotech', founded_year: 1802 }
+]
+
+
+
+// ------------------------------------------------------------------------------------------
+// ------------------------------------------------------------------------------------------
+
+// Коллекция sample_training.trips
+
+// 1. // ------------------------------------------------------------------------------------
+
+[
+  { tripduration: 61, 'end station name': 'E 20 St & FDR Drive' },
+  { tripduration: 61, 'end station name': 'E 85 St & York Ave' },
+  { tripduration: 65, 'end station name': 'Riverside Dr & W 78 St' }
+]
+
+
+// 2. // ------------------------------------------------------------------------------------
+
+[ { usertype: 'Subscriber', 'birth year': 1999 } ]
+
+
+// 3. // ------------------------------------------------------------------------------------
+
+[
+  { tripduration: 326222, 'end station name': 'State St & Smith St' },
+  { tripduration: 279620, 'end station name': 'NYCBS Depot - DEL' },
+  { tripduration: 173357, 'end station name': 'Bushwick Ave & Powers St' },
+  { tripduration: 152023, 'end station name': 'Catherine St & Monroe St' },
+  { tripduration: 146099, 'end station name': 'Bank St & Washington St'  }
+]
+
+
+// 4. // ------------------------------------------------------------------------------------
+[
+  { tripduration: 5596, 'end station name': '1 Ave & E 15 St' },
+  { tripduration: 5594, 'end station name': '1 Ave & E 15 St' },
+  { tripduration: 2494, 'end station name': '1 Ave & E 15 St' },
+  { tripduration: 1366, 'end station name': '1 Ave & E 15 St' },
+  { tripduration: 1294, 'end station name': '1 Ave & E 15 St' },
+  ...
+  ...
+ ]
+
+
+// 5. // ------------------------------------------------------------------------------------
+
+[
+  { bikeid: 15788, 'stop time': ISODate("2016-01-01T00:06:51.000Z") },
+  { bikeid: 17827, 'stop time': ISODate("2016-01-01T00:07:04.000Z") }
+]
+
+
+// 6. // ------------------------------------------------------------------------------------
+
+[
+  { tripduration: 71, 'end station name': 'Broadway & W 36 St' },
+  { tripduration: 71, 'end station name': 'Greenpoint Ave & Manhattan Ave' },
+  { tripduration: 72, 'end station name': 'W 13 St & 6 Ave' },
+  { tripduration: 72, 'end station name': 'W 13 St & 7 Ave' },
+  { tripduration: 72, 'end station name': '8 Ave & W 33 St' }
+]
+

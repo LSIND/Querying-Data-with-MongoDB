@@ -1,5 +1,6 @@
 // Модуль 3. Операторы запросов
-// ОПЕРАТОРЫ МАССИВОВ И ЭЛЕМЕНТОВ
+// Ex 3 - ОПЕРАТОРЫ МАССИВОВ И ЭЛЕМЕНТОВ
+//
 
 // Коллекция weatherdata.weather
 use('weatherdata')
@@ -71,9 +72,9 @@ q = { $and:[
 p = {st: 1, callLetters:1, "position.coordinates":1,  _id: 0}
 
 // Запросы для проверки
-//db.weather.find(q)
-//db.weather.find(q,p)
-//db.weather.find(q,p).sort(s)
+db.weather.find(q)
+db.weather.find(q,p)
+db.weather.find(q,p).sort(s)
 db.weather.find(q).count()
 
 
@@ -102,6 +103,6 @@ q ={ $expr:
 s = {name: 1}
 
 // Запросы для проверки
-//db.companies.find(q,p)
-//db.companies.find(q,p).sort(s)
+db.companies.find(q,p)
+db.companies.find(q,p).sort(s)
 db.companies.find(q).count()

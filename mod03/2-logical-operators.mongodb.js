@@ -1,5 +1,6 @@
 // Модуль 3. Операторы запросов
-// ЛОГИЧЕСКИЕ ОПЕРАТОРЫ
+// Ex 2 - ЛОГИЧЕСКИЕ ОПЕРАТОРЫ
+//
 
 // Коллекция sample_training.zips
 
@@ -39,8 +40,8 @@ q = { $and: [
 }
 
 // Запросы для проверки
-//db.zips.find(q)
-//db.zips.find(q,p).sort(s)
+db.zips.find(q)
+db.zips.find(q,p).sort(s)
 db.zips.find(q).count()
 
 
@@ -79,6 +80,7 @@ s = { number_of_employees: 1 }
 // Исключите документы, где permalink или twitter_username отсутствуют. 
 // Не учитывайте регистр
 // Отсортируйте по permalink в алфавитном порядке (2536).
+
 q = { $and: [ 
     { permalink: {$ne: null } },
     { twitter_username: {$nin: [null, ""] } },
@@ -101,8 +103,8 @@ s = { founded_month: 1 }
 
 // Запросы для проверки
 db.companies.explain().find(q,p).sort(s)
-//db.companies.find(q,p).sort(s).collation(c)
-//db.companies.find(q).count()
+db.companies.find(q,p).sort(s).collation(c)
+db.companies.find(q).count()
 
 
 // ------------------------- //
